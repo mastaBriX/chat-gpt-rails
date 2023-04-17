@@ -1,0 +1,56 @@
+/* 侧边栏样式 */
+
+.sidebar {
+  width: 260px; /* 侧边栏宽度 */
+  height: 100vh; /* 侧边栏高度与视口高度相同 */
+  background-color: #282828; /* 背景颜色 */
+  padding: 0.5rem; /* 内边距 */
+  overflow-y: auto; /* 添加滚动条，如果内容超出高度 */
+  position: sticky;
+  top: 0;
+  color: #F7F7F7;
+  box-sizing: border-box;
+}
+
+.sidebar nav {
+  box-sizing: border-box;
+  display: flex;
+  flex: 1;
+  height: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* 侧边栏链接样式 */
+
+.sidebar a {
+  display: block;
+  text-decoration: none;
+  color: #F7F7F7;
+  padding: 0.5rem 1.8rem;
+  height: 30px;
+  cursor: pointer;
+  border-radius: 10px;
+  i {
+    width: 25px;
+  }
+}
+
+
+.sidebar a:hover {
+  background-color: #484848;
+}
+
+.sidebar-links {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #5d5d5d;
+  border-radius: 10px;
+}
+
+.sidebar-user-links {
+  flex: 0.3;
+  display: flex;
+  border-top: 1px solid #5d5d5d;
+  flex-direction: column-reverse;
+}

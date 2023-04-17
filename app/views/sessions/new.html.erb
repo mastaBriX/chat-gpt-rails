@@ -1,0 +1,17 @@
+<h1>登录</h1>
+
+<%= form_with url: login_path, local: true, scope: :session do |f| %>
+  <div class="field">
+    <%= f.label :username %>
+    <%= f.text_field :username %>
+  </div>
+  <div class="field">
+    <%= f.label :password %>
+    <%= f.password_field :password %>
+  </div>
+  <div class="actions">
+    <%= f.submit "登录" %>
+  </div>
+<% end %>
+
+<%= link_to "注册新用户", signup_url, class: "button" %>

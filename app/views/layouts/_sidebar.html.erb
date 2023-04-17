@@ -1,0 +1,18 @@
+<!-- app/views/layouts/_sidebar.html.erb -->
+<div class="sidebar">
+  <nav>
+    <div class="sidebar-links">
+      <%= link_to "创建新对话", root_path %>
+    </div>
+    <div class="sidebar-user-links">
+      <% if session[:user_name] && session[:user_id] %>
+        <%= link_to raw('<i class="fa-solid fa-right-from-bracket"></i> 注销'), logout_path, data: { turbo_action: 'replace', turbo_method: 'delete' } %>
+        <%= link_to raw('<i class="fa-regular fa-trash-can"></i> 清空记录'), chat_path, data: { turbo_action: 'replace', turbo_method: 'delete' } %>
+      <% else %>
+        <%= link_to raw('<i class="fa-solid fa-right-to-bracket"></i> 登录'), login_url %>
+        <%= link_to raw('<i class="fa-solid fa-plus"></i> 注册'), signup_url %>
+      <% end %>
+      <%= link_to raw('<i class="fa-solid fa-sliders"></i> 设置'), root_path %>
+    </div>
+  </nav>
+</div>

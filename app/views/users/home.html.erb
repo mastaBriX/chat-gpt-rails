@@ -1,0 +1,20 @@
+
+<% flash.each do |k, v| %>
+  <div style="color: red"><%= v %></div>
+<% end %>
+<div>
+  <% if session[:user_name] && session[:user_id] %>
+    <h1>你好, <%= session[:user_name].to_s.capitalize %> </h1>
+    <%= link_to "开始Chat", chat_url %>
+  <% else %>
+    <h1>你好， 游客！请先
+      <%= link_to "登录", login_url %>
+      或
+      <%= link_to "注册", signup_url %>
+    </h1>
+  <% end %>
+</div>
+
+
+
+<!--<h1><%#= session.to_hash %></h1>-->
