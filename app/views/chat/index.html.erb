@@ -14,7 +14,7 @@
 <% end %>
 </div>
 
-<%= form_with url: chat_path, format: :json ,method: "post", local: false do |f| %>
+<%= form_with url: chat_path, format: :json, local: false, data: { turbo_method: :post, turbo_action: "action:replace", target: "chat-messages" } do |f| %>
   <div class="field">
     <%= f.text_area :message, required: true, id: 'chat-textarea' %>
   </div>

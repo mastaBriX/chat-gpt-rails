@@ -9,33 +9,18 @@ class ChatController < ApplicationController
   def message
     session[:chatHistory] ||= {}
     session[:chatHistory][session[:user_id]] ||= []
-    session[:chatHistory][session[:user_id]].push({ time: Time.now.to_i.to_s, role: 'user', content: chat_params })
+    session[:chatHistory][session[:user_id]] << { time: Time.now.to_i.to_s, role: 'user', content: chat_params }
 
-    turbo_stream.append(
-      "chat-messages",
-      partial: "message",
-      locals: { msg: session[:chatHistory][session[:user_id]].last }
-    )
+    turbo_stream.append "chat-messages", partial: "message", locals: { msg: session[:chatHistory][session[:user_id]].last }
 
-    Thread.new do
-      data = session[:chatHistory][session[:user_id]].map do |history|
-        { role: history[:role], content: history[:content] }
-      end
+    data = session[:chatHistory][session[:user_id]].map { |history| { role: history[:role], content: history[:content] } }
 
-      session[:chatHistory][session[:user_id]].push({ time: Time.now.to_i.to_s, role: 'assistant', content: get_response_from_openai(data) })
-
-      turbo_stream.append(
-        "chat-messages",
-        partial: "message",
-        locals: { msg: session[:chatHistory][session[:user_id]].last }
-      )
-    end
+    response = { time: Time.now.to_i.to_s, role: 'assistant', content: get_response_from_openai(data) }
+    session[:chatHistory][session[:user_id]] << response
+    turbo_stream.append "chat-messages", partial: "message", locals: { msg: response }
 
     head :no_content
-    # respond_to do |format|
-    #   format.html { redirect_to chat_path }
-    #   format.json { render json: { chatHistory: session[:chatHistory][session[:user_id]] } }
-    # end
+
   end
 
   def clear
@@ -58,12 +43,12 @@ class ChatController < ApplicationController
   end
 
   def get_response_from_openai(message)
-    # @client.chat(
-    #   parameters: {
-    #     model: "gpt-3.5-turbo",
-    #     messages: message,
-    #     temperature: 0.7,
-    #   }).dig("choices", 0, "message", "content")
-    "test"
+    @client.chat(
+      parameters: {
+        model: "gpt-3.5-turbo",
+        messages: message,
+        temperature: 0.7,
+      }).dig("choices", 0, "message", "content")
+    # "test"
   end
 end
