@@ -1,13 +1,20 @@
 <h1>Chat</h1>
+<%# if session[:chatHistory] && session[:chatHistory][session[:user_id]] %>
+<%# session[:chatHistory][session[:user_id]].each do |msg| %>
+<!--    <div>-->
+<!--      <pre><%#= Time.at(msg[:time].to_i).strftime('%Y-%m-%d %H:%M:%S') + ' ' + msg[:role].to_s + '说:' + msg[:content] %></pre>-->
+<!--    </div>-->
+<%# end %>
+<%# end %>
+<div id="chat-messages" style="background-color: #c5c5c5">
 <% if session[:chatHistory] && session[:chatHistory][session[:user_id]] %>
   <% session[:chatHistory][session[:user_id]].each do |msg| %>
-    <div>
-      <pre><%= Time.at(msg[:time].to_i).strftime('%Y-%m-%d %H:%M:%S') + ' ' + msg[:role].to_s + '说:' + msg[:content] %></pre>
-    </div>
+    <%= render partial: "message", locals: { msg: msg } %>
   <% end %>
 <% end %>
+</div>
 
-<%= form_with url: chat_path, local: true do |f| %>
+<%= form_with url: chat_path, format: :json ,method: "post", local: false do |f| %>
   <div class="field">
     <%= f.text_area :message, required: true, id: 'chat-textarea' %>
   </div>

@@ -4,8 +4,7 @@ Rails.application.routes.draw do
   # chat
   get 'chat', to: 'chat#index'
   post 'chat', to: 'chat#message'
-  delete 'chat', to: 'chat#clear_history'
-
+  delete 'chat', to: 'chat#clear'
 
   # 用户登录和登出
   get 'login', to: 'sessions#new'
