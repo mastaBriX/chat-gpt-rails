@@ -10,7 +10,6 @@ gem "font-awesome-sass", "~> 6.4.0"
 gem "importmap-rails"
 gem "jbuilder"
 gem 'jquery-rails'
-gem 'jquery-ui-rails'
 gem "pg", "~> 1.1"
 gem "puma", "~> 5.0"
 gem "rails", "~> 7.0.4"

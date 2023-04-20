@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   root 'users#home'
+  get 'ping', to:'health_check#ping'
 
   # chat
   get 'chat', to: 'chat#index'
