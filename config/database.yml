@@ -83,6 +83,4 @@ test:
 #
 production:
   <<: *default
-  database: chat_gpt_production
-  username: chat_gpt
-  password: <%= ENV["CHAT_GPT_DATABASE_PASSWORD"] %>
+  url: <%= ENV.fetch('DATABASE_URL') %>
