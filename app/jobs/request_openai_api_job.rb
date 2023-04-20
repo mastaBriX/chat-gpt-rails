@@ -3,7 +3,7 @@ class RequestOpenaiApiJob < ApplicationJob
 
   def perform(data, current_user, redis_key)
     @client ||= OpenAI::Client.new
-    @redis ||= Redis.new(ENV.fetch('REDIS_URL_SESSION'))
+    @redis ||= Redis.new(url: ENV.fetch('REDIS_URL_SESSION'))
 
     response = { time: Time.now.to_i.to_s, role: 'assistant', content: get_response_from_openai(data) }
 
