@@ -1,0 +1,77 @@
+/* 导航栏样式 */
+
+.sidebar {
+  min-width: 260px; /* 侧边栏宽度 */
+  height: 100%; /* 侧边栏高度与视口高度相同 */
+  background-color: #202021; /* 背景颜色 */
+  padding: 0.5rem; /* 内边距 */
+  overflow-y: auto; /* 添加滚动条，如果内容超出高度 */
+  position: sticky;
+  color: #F7F7F7;
+  box-sizing: border-box;
+  display: flex;
+
+  &-user-links {
+    flex: 0.2;
+    display: flex;
+    border-top: 1px solid #5d5d5d;
+    flex-direction: column;
+    padding: 10px 0;
+  }
+
+  &-links {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #5d5d5d;
+    border-radius: 10px;
+  }
+
+  nav {
+    box-sizing: border-box;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  a {
+    display: block;
+    text-decoration: none;
+    color: #f6f6f6;
+    padding: 0.5rem 1.2rem;
+    height: 30px;
+    line-height: 28px;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: background-color 0.2s;
+
+    i {
+      width: 25px;
+    }
+  }
+
+  a:hover {
+    background-color: rgba(49, 49, 49, 0.75);
+  }
+}
+
+.topbar {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  /* 侧边栏隐藏 */
+  .sidebar {
+    display: none;
+  }
+  /* 顶部导航显示 */
+  .topbar {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #f1f1f1;
+    padding: 10px;
+  }
+}

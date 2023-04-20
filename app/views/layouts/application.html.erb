@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-turbo=true>
 <head>
   <title>ChatGpt</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -7,13 +7,17 @@
   <%= csp_meta_tag %>
 
   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+
   <%= javascript_importmap_tags %>
 </head>
 
 <body>
 <div class="container">
   <%= render 'layouts/sidebar' %>
-  <div class="main-content"><%= yield %></div>
+  <%= render 'layouts/topbar' %>
+  <div class="main-content">
+    <%= yield %>
+  </div>
 </div>
 </body>
 </html>

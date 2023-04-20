@@ -1,0 +1,103 @@
+
+.main-content {
+  width: 100%;
+  flex: 1;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+  .chat-screen-area {
+    flex: 1;
+    overflow: auto;
+    background-color: #ffffff;
+    box-sizing: border-box;
+
+    .chat-screen-header {
+      position: relative;
+      box-sizing: border-box;
+      height: 45px;
+      line-height: 45px;
+      text-align: center;
+      font-size: 0.8rem;
+      background-color: #f6f6f6;
+      color: #969696;
+      box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+      z-index: 1;
+    }
+
+    .chat-messages {
+      flex: 1;
+      box-sizing: border-box;
+      background-color: #ffffff;
+
+      .chat-message {
+        box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+
+        pre {
+          white-space: pre-wrap;
+          height: 100%;
+          padding: 30px 200px;
+          overflow-wrap: break-word;
+          margin: 0;
+          font-size: 1.2rem;
+          @media only screen and (max-width: 890px) {
+            padding: 10px 20px;
+          }
+        }
+
+        &.user {
+          background-color: white;
+        }
+
+        &.assistant {
+          background-color: #f6f6f6;
+        }
+      }
+    }
+  }
+
+  .chat-input-area {
+    height: 10vh;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+
+    .personal-statement {
+      color: #cccccc;
+      flex: 1;
+      padding: 20px;
+    }
+
+    .chat-form {
+      box-sizing: border-box;
+      flex: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+
+      .chat-textarea {
+        height: 30px;
+        width: 55vw;
+        margin: 0 auto;
+        resize: none;
+        position: relative;
+        box-sizing: border-box;
+        line-height: 2rem;
+        font-size: 1.2rem;
+        border-radius: 6px;
+        border: none;
+        outline: none;
+        padding: 6px 20px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
+
+      }
+    }
+  }
+
+}
+
+

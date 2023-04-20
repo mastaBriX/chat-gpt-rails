@@ -13,14 +13,27 @@
  *= require_tree .
  *= require_self
  */
+@import "jquery-ui.css";
 @import "font-awesome";
+html{
+    height: 100%;
+}
 body{
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+    height: 100%;
 }
 
 .container {
     display: flex;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+    height: 100%;
+}
+@media screen and (max-width: 768px){
+    .container{
+        flex-direction: column;
+    }
 }

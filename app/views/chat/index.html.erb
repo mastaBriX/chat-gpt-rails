@@ -1,28 +1,27 @@
-<h1>Chat</h1>
-<%# if session[:chatHistory] && session[:chatHistory][session[:user_id]] %>
-<%# session[:chatHistory][session[:user_id]].each do |msg| %>
-<!--    <div>-->
-<!--      <pre><%#= Time.at(msg[:time].to_i).strftime('%Y-%m-%d %H:%M:%S') + ' ' + msg[:role].to_s + '说:' + msg[:content] %></pre>-->
-<!--    </div>-->
-<%# end %>
-<%# end %>
-<div id="chat-messages" style="background-color: #c5c5c5">
-<% if session[:chatHistory] && session[:chatHistory][session[:user_id]] %>
-  <% session[:chatHistory][session[:user_id]].each do |msg| %>
-    <%= render partial: "message", locals: { msg: msg } %>
-  <% end %>
-<% end %>
+<div class="chat-screen-area">
+  <div class="chat-screen-header">Model: Default(GPT-3.5)</div>
+
+  <div id="chat-messages" class="chat-messages">
+    <% if session[:chatHistory] && session[:chatHistory][@current_user.id] %>
+      <% session[:chatHistory][@current_user.id].each do |msg| %>
+        <%= render partial: "message", locals: { msg: msg, from: msg[:role] == 'user' ? @current_user.username : 'Chat-GPT'  ,msg_id: SecureRandom.uuid } %>
+      <% end %>
+    <% end %>
+    <%= turbo_stream_from "chat-messages-#{@current_user.id}" %>
+  </div>
+
 </div>
 
-<%= form_with url: chat_path, format: :json, local: false, data: { turbo_method: :post, turbo_action: "action:replace", target: "chat-messages" } do |f| %>
-  <div class="field">
-    <%= f.text_area :message, required: true, id: 'chat-textarea' %>
-  </div>
-  <div class="actions">
-    <%= f.submit "发送" %>
-  </div>
-<% end %>
+<div class="chat-input-area">
 
+  <%= form_with url: chat_path, local: false, id: "chat-form", class: "chat-form", data: { turbo: true, controller: :chat } do |f| %>
 
+      <%= f.text_area :message, required: true, id: 'chat-textarea', class: "chat-textarea", placeholder: "发送消息……" %>
+      <%= f.submit "发送", id: "chat-submit-btn" %>
+
+  <% end %>
+  <div class="personal-statement">powered by Yuze Xie</div>
+
+</div>
 
 

@@ -5,12 +5,12 @@
 <div>
   <% if session[:user_name] && session[:user_id] %>
     <h1>你好, <%= session[:user_name].to_s.capitalize %> </h1>
-    <%= link_to "开始Chat", chat_url %>
+    <%= button_to "开始Chat", chat_url, method: :get %>
   <% else %>
     <h1>你好， 游客！请先
-      <%= link_to "登录", login_url %>
+      <%= link_to "登录", login_path %>
       或
-      <%= link_to "注册", signup_url %>
+      <%= link_to "注册", signup_path %>
     </h1>
   <% end %>
 </div>

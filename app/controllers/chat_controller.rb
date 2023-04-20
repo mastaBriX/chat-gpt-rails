@@ -1,26 +1,25 @@
 require 'openai'
 
 class ChatController < ApplicationController
-  before_action :authorize, :init_openai_client,
+  before_action :authorize
 
     def index
+      session[:chatHistory] ||= {}
+      session[:chatHistory][@current_user.id] ||= []
+      puts session.id
     end
 
   def message
-    session[:chatHistory] ||= {}
-    session[:chatHistory][session[:user_id]] ||= []
-    session[:chatHistory][session[:user_id]] << { time: Time.now.to_i.to_s, role: 'user', content: chat_params }
+    session[:chatHistory][@current_user.id] << { time: Time.now.to_i.to_s, role: 'user', content: chat_params }
 
-    turbo_stream.append "chat-messages", partial: "message", locals: { msg: session[:chatHistory][session[:user_id]].last }
+    data = session[:chatHistory][@current_user.id].map { |history| { role: history[:role], content: history[:content] } }
 
-    data = session[:chatHistory][session[:user_id]].map { |history| { role: history[:role], content: history[:content] } }
+    Turbo::StreamsChannel.broadcast_append_to "chat-messages-#{@current_user.id}", target: "chat-messages", partial: "chat/message", locals: { msg: session[:chatHistory][@current_user.id].last, from:@current_user.username, msg_id: SecureRandom.uuid }
 
-    response = { time: Time.now.to_i.to_s, role: 'assistant', content: get_response_from_openai(data) }
-    session[:chatHistory][session[:user_id]] << response
-    turbo_stream.append "chat-messages", partial: "message", locals: { msg: response }
+    # 向openai api发送请求获取返回
+    RequestOpenaiApiJob.perform_later(data, @current_user, "session:#{session.id.private_id}")
 
-    head :no_content
-
+    render json: {status: :ok, data: { time: Time.now.to_i.to_s, role: @current_user.username, content: chat_params }}
   end
 
   def clear
@@ -33,22 +32,9 @@ class ChatController < ApplicationController
   end
 
   private
-
-  def init_openai_client
-    @client = OpenAI::Client.new
-  end
-
   def chat_params
     params.require(:message)
   end
 
-  def get_response_from_openai(message)
-    @client.chat(
-      parameters: {
-        model: "gpt-3.5-turbo",
-        messages: message,
-        temperature: 0.7,
-      }).dig("choices", 0, "message", "content")
-    # "test"
-  end
+
 end
