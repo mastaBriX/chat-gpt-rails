@@ -1,0 +1,24 @@
+<div data-controller="admin">
+<h1>Admin#index</h1>
+<table align="center" id="admin-user-table">
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Admin</th>
+    <th>Activated</th>
+    <th>Ops</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @users.each do |user| %>
+    <%= render partial: 'record', locals: { user: user } %>
+  <% end %>
+  </tbody>
+</table>
+
+<div>
+  <%= button_tag 'Save', type: 'summit', disabled: true, id: "admin-save-button" %>
+</div>
+</div>

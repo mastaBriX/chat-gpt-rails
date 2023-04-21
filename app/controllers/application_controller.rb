@@ -6,6 +6,10 @@ class ApplicationController < ActionController::Base
   end
 
   def authorize
-    redirect_to login_path unless current_user
+    redirect_to login_path unless current_user&.activated?
+  end
+
+  def has_admin
+    head :unauthorized unless current_user&.admin?
   end
 end

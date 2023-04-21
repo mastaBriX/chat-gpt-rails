@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   root 'users#home'
   get 'ping', to:'health_check#ping'
 
@@ -16,7 +17,14 @@ Rails.application.routes.draw do
   get 'signup', to: 'users#new'
   post 'signup', to: 'users#create'
 
+
+  # Admin
+  get 'admin', to: 'admin#index'
+  delete 'admin/delete', to: 'admin#destroy'
+
   # debug用api
   get 'users/json', to: 'users#json'
   get 'chat/history', to: 'chat#get_history'
+
+
 end

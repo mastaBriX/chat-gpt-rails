@@ -1,0 +1,14 @@
+<tr id=<%= "admin-table-record-#{user.id}" %>>
+  <td><%= user.id %></td>
+  <td><%= user.username %></td>
+  <td><%= user.email %></td>
+  <td><%= user.admin %></td>
+  <td><%= check_box_tag 'activated', 'activated', user.activated, class: "admin-activated-checkbox" %></td>
+  <td>
+    <div class="admin-btn-group">
+      <%= button_to 'delete', admin_delete_path, method: :delete , params: {id: user.id}%>
+    </div>
+  </td>
+</tr>
+
+
